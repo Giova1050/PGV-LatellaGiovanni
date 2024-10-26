@@ -1,33 +1,36 @@
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
+
 import net.salesianos.procesos.ProcessLauncher;
 
 public class App {
     public static void main(String[] args) throws Exception {
 
-        String lines = "input\\Datos.csv";
-
+        String filePath = "files/input/Datos.csv";
+        List<String> lines = Files.readAllLines(Paths.get(filePath));
         ArrayList<Process> calculateProcesses = new ArrayList<>();
 
-        for (int i = 0; i < lines.size(); i++) {
-            Process process = ProcessLauncher.initMedia(lines.get(i), "calculus-" + i + ".txt");
-            calculateProcesses.add(process);
+        for (int i = 0; i < 1; i++) {
+            for (String line : lines) {
+                Process process = ProcessLauncher.initMedia(line, "media-output-" + i + ".txt");
+                calculateProcesses.add(process);
+            }
+        }
+
+        for (int i = 0; i < 1; i++) {
+            for (String line : lines) {
+                Process process = ProcessLauncher.initMediana(line, "mediana-output-" + i + ".txt");
+                calculateProcesses.add(process);
+            }
         }
 
         for (Process process : calculateProcesses) {
             process.waitFor();
         }
 
-        for (int i = 0; i < lines.size(); i++) {
-            Process process = ProcessLauncher.initMediana(lines.get(i), "calculus-" + i + ".txt");
-            calculateProcesses.add(process);
-        }
-
-        for (Process process : calculateProcesses) {
-            process.waitFor();
-        }
-
-        
+        System.out.println("Todos los procesos han finalizado.");
     }
 }
 

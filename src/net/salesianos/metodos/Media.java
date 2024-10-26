@@ -1,17 +1,18 @@
 package net.salesianos.metodos;
 
-import java.util.ArrayList;
-
 public class Media {
     public static void main(String[] args) {
 
         String num = args[0];
         String[] media = num.split(",");
         double suma = 0;
-        for (double fornum : num) {
+
+        for (String strNum : media) {
+            double fornum = Double.parseDouble(strNum);
             suma += fornum;
         }
-        double resultado = suma / num.length();
+
+        double resultado = suma / media.length;
+        System.out.println("La media es: " + resultado);
     }
 }
-
